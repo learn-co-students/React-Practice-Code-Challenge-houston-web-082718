@@ -30,8 +30,6 @@ class App extends Component {
   };
 
   mapSushis = () => {
-    console.log("fired");
-
     let currentSushis = [];
     this.state.sushiSet.forEach(i => {
       currentSushis.push(this.state.sushis[i]);
@@ -42,13 +40,12 @@ class App extends Component {
 
   moreSushi = () => {
     let currentIndex = this.state.sushiSet[0];
-    if (currentIndex + 4 > this.state.sushis.length) {
-      this.setState({ sushiSet: [0, 1, 2, 3] });
+    if (currentIndex + 4 >= this.state.sushis.length) {
+      this.setState({ sushiSet: [0, 1, 2, 3] }, () => this.mapSushis());
     } else {
       let newSet = this.state.sushiSet.map(i => {
         return i + 4;
       });
-      console.log(newSet);
 
       this.setState({ sushiSet: newSet }, () => this.mapSushis());
     }
@@ -58,7 +55,7 @@ class App extends Component {
     let foundSushi = this.state.sushis.find(sushi => {
       return sushi.id === id;
     });
-    if (foundSushi.price < this.state.tab) {
+    if (foundSushi.price <= this.state.tab) {
       foundSushi.eaten = true;
       let newEaten = [...this.state.eatenSushi, foundSushi];
       this.setState(state => {

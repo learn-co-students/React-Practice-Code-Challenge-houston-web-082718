@@ -7,7 +7,11 @@ const Sushi = props => {
         {/* Tell me if this sushi has been eaten! */
 
         props.piece.eaten ? null : (
-          <img src={props.piece.img_url} width="100%" />
+          <img
+            src={props.piece.img_url}
+            width="100%"
+            alt={`sushi-${props.piece.id}`}
+          />
         )}
       </div>
       <h4 className="sushi-details">
