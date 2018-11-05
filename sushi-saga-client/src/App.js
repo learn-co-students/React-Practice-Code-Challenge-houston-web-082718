@@ -55,7 +55,7 @@ class App extends Component {
     let foundSushi = this.state.sushis.find(sushi => {
       return sushi.id === id;
     });
-    if (foundSushi.price <= this.state.tab) {
+    if (foundSushi.price <= this.state.tab && foundSushi.eaten === false) {
       foundSushi.eaten = true;
       let newEaten = [...this.state.eatenSushi, foundSushi];
       this.setState(state => {
