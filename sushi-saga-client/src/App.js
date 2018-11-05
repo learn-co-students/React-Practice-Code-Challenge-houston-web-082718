@@ -8,10 +8,10 @@ const API = "http://localhost:3000/sushis"
 class App extends Component {
   state = {
     money: 100,
+    index: 0,
     sushis: [],
     four: [],
-    eaten: [],
-    index: 0
+    eaten: []
   }
   
   
@@ -28,23 +28,29 @@ class App extends Component {
       four.push(this.state.sushis[i]);
     }
     let newIndex = this.state.index + 4;
-    this.setState({
-      index: newIndex,
-      four: four
-    })
+
+    if (this.state.index === 96) {
+      this.setState({
+        index: 0,
+        four: four
+      })
+    } else {
+      this.setState({
+        index: newIndex,
+        four: four
+      })
+    }
   }
 
   clickSushi = event => {
     const eatenSushi = this.state.sushis[event.target.id - 1]
     const price = eatenSushi.price;
-    if (this.state.money > price) {
+    const newMoney = this.state.money - price;
+    if (this.state.money >= price) {
       event.target.src = "";
-      let newMoney = this.state.money - price;
-      let newEaten = [];
-      newEaten.push(eatenSushi)
       this.setState({
         money: newMoney,
-        eaten: [...this.state.eaten, newEaten]
+        eaten: [...this.state.eaten, parseInt(event.target.id, 10)]
       });
     } else {
       alert("You can't afford that, plebe!")
@@ -54,7 +60,12 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <SushiContainer sushis={this.state.four} fourSushis={this.fourSushis} clickSushi={this.clickSushi}/>
+        <SushiContainer
+          sushis={this.state.four}
+          fourSushis={this.fourSushis}
+          clickSushi={this.clickSushi}
+          eatenSushis={this.state.eaten}
+        />
         <Table money={this.state.money} eaten={this.state.eaten} />
       </div>
     );
