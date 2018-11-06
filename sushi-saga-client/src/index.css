@@ -77,3 +77,14 @@ body {
   width: 700px;
   margin: auto;
 }
+
+.waiter {
+  margin-top: 120px;
+  position: absolute;
+  left: 660px;
+  top: 195px;
+}
+
+form {
+  padding-top: 60px;
+}
