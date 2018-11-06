@@ -8,6 +8,7 @@ const API = "http://localhost:3000/sushis"
 class App extends Component {
   state = {
     money: 100,
+    addedMoney: 0,
     index: 0,
     sushis: [],
     four: [],
@@ -57,6 +58,27 @@ class App extends Component {
     }
   }
 
+  addFunds = event => {
+    event.preventDefault();
+    const money = this.state.money;
+    const addedMoney = this.state.addedMoney
+    this.setState({
+      money: money + parseInt(addedMoney, 10)
+    });
+  }
+
+  changeAddedAmount = event => {
+    this.setState({
+      addedMoney: event.target.value
+    })
+  }
+
+  callWaiter = () => {
+    this.setState({
+      eaten: []
+    })
+  }
+
   render() {
     return (
       <div className="app">
@@ -67,6 +89,11 @@ class App extends Component {
           eatenSushis={this.state.eaten}
         />
         <Table money={this.state.money} eaten={this.state.eaten} />
+        <form className="remaining" onSubmit={this.addFunds}>
+          <input onChange={this.changeAddedAmount} />
+          <button>Add Funds to SushiWallet!</button>
+        </form>
+        <button className="remaining waiter" onClick={this.callWaiter}>Call Waiter</button>
       </div>
     );
   }
